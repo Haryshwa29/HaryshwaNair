@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function NotFound() { return <main id="main" className="wrap not-found"><p className="eyebrow">404 / A path less travelled</p><h1>This page is<br /><em>out of scope.</em></h1><p>The page may have moved, or the address may be incomplete. The work is still here.</p><Link className="button button-gold" href="/#work">Explore selected work →</Link></main>; }
