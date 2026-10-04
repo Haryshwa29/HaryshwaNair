@@ -1,0 +1,17 @@
+'use client';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { ArrowDown, GitBranch, ShieldCheck, Cpu, FileCheck2, Play, Pause } from 'lucide-react';
+const subscribe = (fn: () => void) => { const q = matchMedia('(prefers-reduced-motion: reduce)'); q.addEventListener('change', fn); return () => q.removeEventListener('change', fn); };
+const scenarios = [
+  { name: 'Guardrail hit', input: 'A dangerous pattern is detected', route: 'Escalate before inference', model: 'Bypassed', result: 'Escalate for review', note: 'Without a matching administrator-curated exception, the guardrail decides immediately. No model call is needed.' },
+  { name: 'Ambiguous event', input: 'Rules cannot make a clear decision', route: 'Add history and environment context', model: 'Local Ollama review', result: 'Validate, then record', note: 'Local inference receives scoped context. A low-confidence suppression request, model failure, or applicable guardrail veto escalates for review.' },
+  { name: 'Clear rule match', input: 'The pre-filter reaches a clear decision', route: 'Use the deterministic verdict', model: 'Bypassed', result: 'Record the rule decision', note: 'When no guardrail blocks the path and the pre-filter has a clear decision, the engine records it without inference.' },
+];
+export function TriageDemo() {
+ const [choice,setChoice] = useState(0); const [step,setStep] = useState(0); const [playing,setPlaying] = useState(false);
+ const reduced = useSyncExternalStore(subscribe, () => matchMedia('(prefers-reduced-motion: reduce)').matches, () => true);
+ const scenario = scenarios[choice]; const running = playing && !reduced;
+ useEffect(() => { if (!running) return; const timer = setTimeout(() => { if (step === 3) setPlaying(false); else setStep(step + 1); },1800); return () => clearTimeout(timer); },[running,step]);
+ const stages = [{title:'Event arrives',text:scenario.input,Icon:GitBranch},{title:'Decision gate',text:scenario.route,Icon:ShieldCheck},{title:'Model route',text:scenario.model,Icon:Cpu},{title:'Audit + human oversight',text:scenario.result,Icon:FileCheck2}];
+ return <div className="triage-demo" data-playing={running}><div className="demo-heading"><span className="eyebrow">Follow one decision</span><span className="demo-badge">Illustrative · local only</span></div><div className="demo-tabs" role="group" aria-label="Example event routes">{scenarios.map((s,i)=><button key={s.name} aria-pressed={choice===i} onClick={()=>{setChoice(i);setStep(0);setPlaying(false);}}>{s.name}</button>)}</div><div className="demo-track">{stages.map(({title,text,Icon},i)=><div key={title}>{i>0 && <ArrowDown className="demo-arrow" size={17} aria-hidden="true" />}<button className="demo-step" data-active={step===i} aria-pressed={step===i} onClick={()=>{setStep(i);setPlaying(false);}}><Icon size={22} strokeWidth={1.3} aria-hidden="true" /><span><strong>{title}</strong><small>{text}</small></span><span className="demo-step-number">0{i+1}</span></button></div>)}</div><div className="demo-bottom"><p>{scenario.note}</p>{!reduced && <button className="demo-play" onClick={()=>{if(step===3)setStep(0);setPlaying(!running);}}>{running?<Pause size={15}/>:<Play size={15}/>} {running?'Pause example':'Animate this route'}</button>}<span className="demo-shadow">Shadow mode by default · decisions logged</span></div><p className="demo-disclaimer">An explanation of the code paths, not a live scan or model result.</p></div>;
+}

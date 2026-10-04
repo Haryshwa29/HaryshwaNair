@@ -1,4 +1,58 @@
+# Portrait and quote revision 6 — 2026-10-03
+
+Build, lint, and type checks passed. All 12 smoke tests passed (37.1 seconds), including reload quote changes, stable quote selection during interaction, removal of the contact-arrow link, and the static LinkedIn quote. Verified that the portrait loads and decodes on desktop and mobile; visually reviewed the introduction, portrait crop, and quotes. Reference photos remain unchanged. Generated asset is stored in the project and served locally through Next Image.
+
+---
+
+# Flow and identity revision 5 — 2026-10-03
+
+- Build, lint, and TypeScript checks passed.
+- Eleven smoke tests passed, including full-name rendering, working contact arrow, absence of source-availability status labels, all nine project routes, accessibility, reduced motion, four animated architecture walkthroughs, and keyboard scrolling within the three detailed flowcharts.
+- Reviewed rendered desktop flowcharts for Arbiter, TrustKit, and Honeypot, plus the full-name introduction; final flow screenshots are in reports/flow-*.png.
+- Small-screen diagrams retain readable labels within a bounded horizontal scroll region; text explanations accompany each.
+
+---
+
+# Architecture revision 4 — 2026-10-03
+
+- Production build passed: all nine project pages generated (17 total static outputs).
+- ESLint and TypeScript passed.
+- Ten Playwright tests passed in 29.2 seconds: all content routes, real 404, automated WCAG A/AA checks, responsive overflow at 320px and home at 375/768/1024/1440px, no-JavaScript gallery, contact, navigation, gallery actions, animated diagram play/pause/reset/next/component inspection, runtime reduced-motion changes, optional source omission, and homepage scenarios.
+- Reviewed desktop/mobile architecture screenshots and the distinct homepage triage diagram in `reports/architecture-desktop.png`, `reports/architecture-mobile.png`, and `reports/triage-demo.png`.
+- External project code was reviewed, not executed. Animated diagrams are explanatory UI rather than live systems.
+- Lighthouse scores below are historical measurements from revision 2, not this revision.
+
+---
+
+# Editorial revision 3 — 2026-10-03
+
+- Production build: passed.
+- ESLint and TypeScript checks: passed.
+- Eight Playwright smoke tests: passed (10.7 seconds), including automated WCAG A/AA checks on six routes, 320–1440px overflow checks, navigation, nine-entry no-JavaScript collection, filtering/search/pagination, merged experience, contact, and pointer/reduced-motion behavior.
+- Visual review: desktop and 375px introduction, education/achievements, desktop Arbiter feature and experience section. Screenshots in reports/.
+- Corrected contrast on certification row numbering during validation.
+- Curated gallery: eight projects plus one explicitly planned steganography entry. USA introduction and June 2026 GDG promotion reflect the user’s direct corrections.
+- Historical Lighthouse scores below apply to revision 2; not remeasured for this revision.
+
+---
+
 # Validation — October 3, 2026
+
+## Revision 2 — light editorial collection
+
+The updated homepage includes **16 entries** (all nine public repositories, four earlier source-unavailable projects, and three planned explorations), searchable category filters and six-item pagination. Added `/work`, configurable portrait with image-error fallback, four expandable experience/community/volunteering entries, cursor follower, pointer-responsive portrait, and short entrance motion. The cursor position stays in the browser and is never stored or transmitted. Native cursor and keyboard interactions remain available.
+
+- Production build, lint and TypeScript checks pass.
+- The revised smoke suite has **8 tests**: existing route/404/contact coverage plus filters, search, empty results, all three collection pages, project notes, volunteering expansion, pointer response, and dynamic reduced-motion changes.
+- Axe checks now cover **six** content routes including `/work`; no WCAG A/AA violations found.
+- No-JavaScript rendering exposes all 16 projects, and native project/experience disclosures remain usable. Interactive-only controls appear after hydration.
+- Layout checks cover **320, 375, 768, 1024, and 1440px**. Browser visual inspection covers desktop introduction/gallery and 375px introduction.
+- Text stays at full contrast during entrance motion. Cursor/parallax effects disable for reduced motion and coarse pointers.
+- Revised Lighthouse reports: `reports/lighthouse-mobile-v2.json` and `reports/lighthouse-desktop-v2.json`, same local production-server/Lighthouse conditions described below. Mobile: **96 performance / 100 accessibility / 100 best practices / 63 SEO**, FCP 1.5s, LCP 2.6s, TBT 10ms, CLS 0.047. Desktop: **100 / 100 / 100 / 63**, FCP 0.4s, LCP 0.6s, TBT 0ms, CLS 0.013. SEO remains deliberately blocked pending production-origin configuration.
+- The revised sharing image uses the light palette. Original reports below are retained as the first-edition record, not substituted for the revision's measurements.
+- Portrait, approved resume, production domain, and precise newer GDG title are still content dependencies. No deployment was made.
+
+## First-edition record
 
 Local production build on Windows, Node 24.18.0, npm 11.16.0, Next.js 16.3.8 / React 19.3.0. Nothing deployed publicly.
 
