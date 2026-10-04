@@ -14,13 +14,13 @@ Clean Energy uses a content map. Steganography uses an explicitly planned resear
 
 ## Current editorial scope
 
-The collection contains nine curated entries (eight projects and planned steganography). The introduction foregrounds Haryshwa Nair and his USA location. Experience merges volunteering and subsequent leadership into single journeys. Education, certification/training, and sporting achievements have dedicated visual sections. User corrections on 2026-10-03 supersede older counts and GDG dates in the historical notes.
+The collection contains six repository-backed projects. The introduction foregrounds Haryshwa Nair and his USA location. Experience merges volunteering and subsequent leadership into single journeys. Education, certification/training, and sporting achievements have dedicated visual sections. User corrections on 2026-10-03 supersede older counts and GDG dates in the historical notes.
 
 # Haryshwa Nair — portfolio
 
-A restrained editorial portfolio built with Next.js App Router, TypeScript, Tailwind CSS, locally served Instrument Serif / Manrope, and Lucide icons. Homepage, nine statically generated project pages, privacy, 404, social artwork, favicon, robots, and sitemap. No database, analytics, external embeds, runtime profile requests, or contact service.
+A restrained editorial portfolio built with Next.js App Router, TypeScript, Tailwind CSS, locally served Instrument Serif / Manrope, and Lucide icons. Homepage, six statically generated project pages, privacy, 404, social artwork, favicon, robots, and sitemap. No database, analytics, external embeds, runtime profile requests, or contact service.
 
-The revised edition is predominantly warm ivory with navy and champagne accents. It includes a personal introduction, configurable portrait frame, nine-entry searchable/filterable collection with six projects per page, a dedicated `/work` route, expandable experience/volunteering, cursor-following accents, portrait parallax, and short entrance motion. The native cursor remains available. Effects turn off for reduced motion and coarse pointers. All projects and native disclosures remain available without JavaScript.
+The revised edition is predominantly warm ivory with navy and champagne accents. It includes a personal introduction, configurable portrait frame, six-entry searchable/filterable collection, a dedicated `/work` route, expandable experience/volunteering, cursor-following accents, portrait parallax, and short entrance motion. The native cursor remains available. Effects turn off for reduced motion and coarse pointers. All projects and native disclosures remain available without JavaScript.
 
 ## Preview
 

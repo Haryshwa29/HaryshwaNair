@@ -419,7 +419,7 @@ export const architectures: Record<string, Diagram> = {
         ]
       }
     ],
-    "animated": false
+    "animated": true
   },
   "medai": {
     "title": "A structured evaluation pipeline",
@@ -488,120 +488,6 @@ export const architectures: Record<string, Diagram> = {
         ]
       }
     ],
-    "animated": false
-  },
-  "navexis": {
-    "title": "A browser-side interaction map",
-    "note": "The search form is visual only. This map covers the implemented theme interaction.",
-    "stages": [
-      {
-        "label": "01 / Render",
-        "nodes": [
-          {
-            "title": "HTML + CSS",
-            "subtitle": "Page structure & presentation",
-            "detail": "The browser renders the logo, theme control, and search-style form.",
-            "icon": "input",
-            "path": "index.html"
-          }
-        ]
-      },
-      {
-        "label": "02 / Interact",
-        "nodes": [
-          {
-            "title": "Theme button",
-            "subtitle": "Click event listener",
-            "detail": "A JavaScript listener responds to the theme control.",
-            "icon": "process",
-            "path": "index.html"
-          }
-        ]
-      },
-      {
-        "label": "03 / Update the interface",
-        "nodes": [
-          {
-            "title": "Body class",
-            "subtitle": "Toggle dark-mode",
-            "detail": "The script changes the body class to select the visual theme.",
-            "icon": "branch",
-            "path": "index.html"
-          },
-          {
-            "title": "Logo & button",
-            "subtitle": "Image, label, and title",
-            "detail": "The same handler swaps the logo asset and updates the control text and tooltip.",
-            "icon": "output",
-            "path": "index.html"
-          }
-        ]
-      }
-    ],
-    "animated": false
-  },
-  "clean-energy": {
-    "title": "The content at a glance",
-    "note": "A content overview of the educational website.",
-    "stages": [
-      {
-        "label": "Subject",
-        "nodes": [
-          {
-            "title": "Clean energy awareness",
-            "subtitle": "Educational website",
-            "detail": "A web project introducing microbial fuel cells as a clean-energy topic.",
-            "icon": "input"
-          }
-        ]
-      },
-      {
-        "label": "Focus",
-        "nodes": [
-          {
-            "title": "Microbial fuel cells",
-            "subtitle": "Science communication",
-            "detail": "The project presents this topic for readers exploring clean energy.",
-            "icon": "output"
-          }
-        ]
-      }
-    ],
-    "animated": false
-  },
-  "steganography": {
-    "title": "A planning map",
-    "note": "Planned exploration only. No implementation or tool selection has been made.",
-    "stages": [
-      {
-        "label": "Learning direction",
-        "nodes": [
-          {
-            "title": "Steganography",
-            "subtitle": "Information hiding",
-            "detail": "A planned security learning project about hiding information within digital media.",
-            "icon": "input"
-          }
-        ]
-      },
-      {
-        "label": "Questions to explore",
-        "nodes": [
-          {
-            "title": "Carrier media",
-            "subtitle": "What could carry a message?",
-            "detail": "A question for future scoping, not a selected format or implemented capability.",
-            "icon": "branch"
-          },
-          {
-            "title": "Hidden information",
-            "subtitle": "How could a message be recovered?",
-            "detail": "A future research question. Encoding methods and implementation details remain undecided.",
-            "icon": "scan"
-          }
-        ]
-      }
-    ],
-    "animated": false
+    "animated": true
   }
 };

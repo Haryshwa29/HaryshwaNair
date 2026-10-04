@@ -1,7 +1,9 @@
+import { additionalFlows } from './additional-flows';
 export type FlowNode = {id:string;x:number;y:number;title:string;detail:string;kind:string};
 export type FlowEdge = {path:string;label:string;x:number;y:number};
 export type ProjectFlow = {title:string;intro:string;height:number;nodes:FlowNode[];edges:FlowEdge[];notes:string[]};
 export const flows: Record<string, ProjectFlow> = {
+  ...additionalFlows,
   "arbiter-ai": {
     "title": "How an event becomes a verdict",
     "intro": "Follow the branches: immediate escalation, deterministic decisions, or a contextual model review. All completed decisions converge on the audit trail.",

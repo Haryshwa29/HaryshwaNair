@@ -1,6 +1,21 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-const routes = ['/', '/work', '/projects/arbiter-ai', '/projects/trustkit-ai', '/projects/sentinelscope', '/projects/ssh-honeypot', '/projects/financial-rag', '/projects/medai', '/projects/navexis', '/projects/clean-energy', '/projects/steganography', '/privacy'];
+test('entire card opens its case study and retained projects have both diagrams', async ({ page }) => {
+  await page.goto('/work');
+  const artwork = page.locator('.work-card').first().locator('.work-art');
+  await artwork.scrollIntoViewIfNeeded();
+  const bounds = await artwork.boundingBox();
+  if (!bounds) throw new Error('Project artwork is not rendered');
+  await page.mouse.click(bounds.x + 20, bounds.y + 20);
+  await expect(page).toHaveURL(/projects\/arbiter-ai$/);
+  for (const slug of ['arbiter-ai', 'trustkit-ai', 'sentinelscope', 'ssh-honeypot', 'financial-rag', 'medai']) {
+    await page.goto(`/projects/${slug}`);
+    await expect(page.locator('.system-map')).toBeVisible();
+    await expect(page.locator('.project-flow')).toBeVisible();
+    if (['arbiter-ai', 'trustkit-ai', 'ssh-honeypot'].includes(slug)) await expect(page.locator('.deep-dive-chapter')).toHaveCount(4);
+  }
+});
+const routes = ['/', '/work', '/projects/arbiter-ai', '/projects/trustkit-ai', '/projects/sentinelscope', '/projects/ssh-honeypot', '/projects/financial-rag', '/projects/medai', '/privacy'];
 test('direct routes, accessibility, metadata, evidence and real 404', async ({ page }) => {
   for (const route of routes) {
     const response = await page.goto(route);
@@ -49,7 +64,7 @@ test('essential content and mobile navigation without JavaScript', async ({ brow
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.locator('.work-card')).toHaveCount(9);
+  await expect(page.locator('.work-card')).toHaveCount(6);
   await page.getByLabel('Menu').click();
   await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeVisible();
   await page.getByRole('link', { name: 'Explore the case study' }).first().click();
@@ -60,12 +75,7 @@ test('essential content and mobile navigation without JavaScript', async ({ brow
 test('collection filters, search, pagination, project notes and volunteering', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.work-card')).toHaveCount(6);
-  await page.getByRole('button', { name: 'Next projects' }).click();
-  await expect(page.getByRole('heading', { name: 'Navexis / Search Engine Pages' })).toBeVisible();
-  await expect(page.locator('.work-card')).toHaveCount(3);
-  await expect(page.getByRole('heading', { name: 'Steganography', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Clean Energy Awareness' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Next projects' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Next projects' })).toHaveCount(0);
   await page.getByRole('button', { name: /^Security/ }).click();
   await expect(page.locator('.work-card')).toHaveCount(3);
   await page.getByRole('button', { name: /^Applied AI/ }).click();
@@ -109,7 +119,7 @@ test('gallery and introduction fit tablet and desktop widths', async ({ page }) 
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({ path: `reports/portfolio-${width}.png` });
     }
-    await page.getByRole('button', { name: 'Next projects' }).click();
+    await page.getByRole('button', { name: /^Applied AI/ }).click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `page two width ${width}`).toBe(true);
   }
 });
@@ -160,10 +170,9 @@ test('architecture playback, component inspection, reduced motion and source omi
     await expect(map.locator('.map-stage').nth(1)).toHaveAttribute('data-current', 'true');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
   }
-  for (const slug of ['clean-energy', 'steganography']) {
-    await page.goto(`/projects/${slug}`);
-    await expect(page.locator('.system-map')).toBeVisible();
-    await expect(page.getByRole('link', { name: /View source on GitHub|Inspect this component/ })).toHaveCount(0);
+  for (const slug of ['navexis', 'clean-energy', 'steganography']) {
+    const response = await page.goto(`/projects/${slug}`);
+    expect(response?.status()).toBe(404);
     await expect(page.locator('body')).not.toContainText('Source unavailable');
   }
 });

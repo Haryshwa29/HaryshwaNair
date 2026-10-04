@@ -1,3 +1,9 @@
+# Project refinement — 2026-10-04
+
+Removed project entries 7–9 (Navexis, Clean Energy Awareness, Steganography) at the user’s explicit request, including their generated routes. Expanded the three flagship stories from the previously reviewed pinned-source facts below. Added flow diagrams for SentinelScope, Financial RAG and MedAI; all six retained architecture maps support playback. Added a local illustrative Arbiter network animation and full-card case-study links with separate GitHub links. No new benchmark, production-readiness or individual-ownership claims were introduced.
+
+---
+
 # Portrait and quotes — 2026-10-03
 
 Professional portrait generated using the built-in image tool from the user-supplied Resume-4, passport, and two graduation photographs. It is an AI-generated portrait, not an original camera photograph. Saved at public/images/haryshwa-professional-portrait.png and configured in content/profile.ts. The original generated file is retained outside the workspace as well. No reference photographs were copied into the public site.
