@@ -75,3 +75,11 @@ To enable a resume, place the approved PDF under `public/resume/` and set `resum
 6. Run Lighthouse against the final deployment as hosting and real network behavior affect results.
 
 The site is prepared for deployment but has not been published. Hosting providers may retain operational logs, as described by the privacy page. Avoid adding sensitive files anywhere under public/.
+
+## Cloudflare Workers deployment
+
+Connect this repository on branch `main`. Project name: `haryshwanair`. Build command: `npm run build:cloudflare`. Deploy command: `npx wrangler deploy`. Root directory: `/`. The static export is generated in `out/`; `wrangler.jsonc` supplies asset routing and a real 404. No application server or database is required.
+
+For the first deployment, leave SITE_URL and SITE_INDEXABLE unset. After Cloudflare assigns the public HTTPS URL (or after adding your custom domain), add production build variables `SITE_URL` (the root HTTPS origin, no trailing slash) and `SITE_INDEXABLE=true`, then rebuild. Preview builds should leave SITE_INDEXABLE unset/false to stay noindex. Security headers are generated into `out/_headers`.
+
+Local Cloudflare preview: `npm run build:cloudflare`, then `npx wrangler dev`. Ordinary `npm run build` and `npm start` remain supported.

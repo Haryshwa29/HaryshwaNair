@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  ...(process.env.CLOUDFLARE_EXPORT === 'true' ? { output: 'export' as const, images: { unoptimized: true } } : {
   async headers() {
     return [{ source: '/:path*', headers: [
       { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -10,5 +11,6 @@ const nextConfig: NextConfig = {
       ...((process.env.SITE_URL && (process.env.VERCEL_ENV === 'production' || (!process.env.VERCEL_ENV && process.env.SITE_INDEXABLE === 'true'))) ? [] : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }])
     ] }];
   }
+  })
 };
 export default nextConfig;
