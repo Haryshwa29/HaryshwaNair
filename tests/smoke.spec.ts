@@ -50,9 +50,20 @@ test('320px layout, menu, keyboard and reduced motion', async ({ page }) => {
 test('contact links, clipboard success and failure', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('/');
-  await expect(page.locator('a[href="mailto:haryshwanair29@gmail.com"]')).toBeVisible();
+  await expect(page.locator('.hero-socials a[href="mailto:haryshwanair29@gmail.com"]')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Connect on LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/thaithe-haryshwa-nair/');
-  await expect(page.getByRole('link', { name: /resume/i })).toHaveCount(0);
+  const resumeLinks = page.getByRole('link', { name: 'Download Resume', exact: true });
+  await expect(resumeLinks).toHaveCount(2);
+  for (const link of await resumeLinks.all()) {
+    await expect(link).toHaveAttribute('download', 'Haryshwa-Nair-Resume.pdf');
+    await expect(link).toHaveAttribute('href', '/resume/Haryshwa-Nair-Resume.pdf');
+  }
+  const pdf = await page.request.get('/resume/Haryshwa-Nair-Resume.pdf');
+  expect(pdf.status()).toBe(200);
+  expect(pdf.headers()['content-type']).toContain('application/pdf');
+  expect((await pdf.body()).subarray(0, 5).toString()).toBe('%PDF-');
+  await expect(page.locator('.hero-actions').getByRole('link', { name: 'View Projects' })).toHaveAttribute('href', '#work');
+  await expect(page.locator('.hero-socials').getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Haryshwa29');
   await page.getByRole('button', { name: 'Copy email' }).click();
   await expect(page.locator('.email-actions [role="status"]')).toHaveText('Email address copied.');
   await page.evaluate(() => { Object.defineProperty(navigator.clipboard, 'writeText', { value: async () => { throw new Error('Denied'); } }); });
