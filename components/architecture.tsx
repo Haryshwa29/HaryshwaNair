@@ -23,7 +23,7 @@ export function Architecture({ variant = 'arbiter-ai', repository, commit }: { v
   }, [running, stage, diagram]);
   if (!diagram) return null;
   const selected = diagram.stages[stage].nodes[node];
-  return <figure className="system-map" ref={root} data-running={running} aria-label={`${variant} architecture`}>
+  return <figure className="system-map" ref={root} onPointerEnter={event => { if (event.pointerType === 'mouse' && !reduced && diagram.animated && !running) { if (stage === diagram.stages.length - 1) { setStage(0); setNode(0); } setPlaying(true); } }} data-running={running} aria-label={`${variant} architecture`}>
     <figcaption className="map-header"><div><p className="eyebrow">{diagram.animated ? 'Animated architecture' : 'Visual walkthrough'}</p><h2>{diagram.title}</h2></div><span className="map-mark" aria-hidden="true"><GitBranch size={29} strokeWidth={1} /></span></figcaption>
     <p className="map-intro">{diagram.note}</p>
     {ready && <div className="map-controls">{diagram.animated && !reduced && <button onClick={() => { if (stage === diagram.stages.length - 1) { setStage(0); setNode(0); } setPlaying(!running); }}>{running ? <Pause size={15} /> : <Play size={15} />}{running ? 'Pause walkthrough' : 'Play walkthrough'}</button>}<button onClick={() => { setStage(0); setNode(0); setPlaying(false); }}><RotateCcw size={15} />Reset</button><button disabled={stage === diagram.stages.length - 1} onClick={() => { setStage(stage + 1); setNode(0); setPlaying(false); }}>Next stage <ArrowRight size={15} /></button><span>{stage + 1} / {diagram.stages.length}{reduced ? ' · Reduced motion' : ''}</span></div>}

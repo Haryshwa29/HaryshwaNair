@@ -240,7 +240,7 @@ test('closing quote changes on reload and stays fixed during a visit', async ({ 
 });
 
 
-test('scroll reveals are subtle, run once, and respect reduced motion', async ({ page }) => {
+test('scroll depth follows the viewport and respects reduced motion', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/');
   await expect(page.getByRole('link', { name: 'Open the full collection' })).toHaveCount(0);
@@ -251,9 +251,36 @@ test('scroll reveals are subtle, run once, and respect reduced motion', async ({
     window.scrollTo(0, target.getBoundingClientRect().top + scrollY - 200);
   });
   await expect.poll(() => page.locator('.education-card').first().evaluate(el => el.getAnimations().length)).toBeGreaterThan(0);
-  await expect.poll(() => page.locator('.education-card').first().evaluate(el => el.getAnimations().length)).toBe(0);
+  const firstTime = await page.locator('.education-card').first().evaluate(el => Number(el.getAnimations()[0].currentTime));
+  await page.evaluate(() => window.scrollBy(0, 100));
+  await expect.poll(() => page.locator('.education-card').first().evaluate(el => Number(el.getAnimations()[0].currentTime))).toBeGreaterThan(firstTime);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.locator('.contact-grid').scrollIntoViewIfNeeded();
   expect(await page.locator('.contact-grid').evaluate(el => el.getAnimations().length)).toBe(0);
   await expect(page.locator('.contact-grid')).toHaveCSS('opacity', '1');
+});
+
+
+test('architecture hover resumes playback and manual controls still pause', async ({ page }) => {
+  for (const slug of ['arbiter-ai', 'trustkit-ai', 'sentinelscope', 'ssh-honeypot', 'financial-rag', 'medai']) {
+    await page.goto('/projects/' + slug);
+    const map = page.locator('.system-map');
+    await map.scrollIntoViewIfNeeded();
+    await map.getByRole('button', { name: 'Reset', exact: true }).click();
+    await page.mouse.move(0, 0);
+    await map.locator('.map-header').hover();
+    await expect(map).toHaveAttribute('data-running', 'true');
+    await map.getByRole('button', { name: 'Pause walkthrough' }).click();
+    await expect(map).toHaveAttribute('data-running', 'false');
+  }
+  await page.goto('/');
+  const demo = page.locator('.triage-demo');
+  await demo.getByRole('button', { name: 'Clear rule match', exact: true }).click();
+  await page.mouse.move(0, 0);
+  await demo.locator('.demo-heading').hover();
+  await expect(demo).toHaveAttribute('data-playing', 'true');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.mouse.move(0, 0);
+  await demo.locator('.demo-heading').hover();
+  await expect(demo).toHaveAttribute('data-playing', 'false');
 });
