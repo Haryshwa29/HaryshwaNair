@@ -1,3 +1,9 @@
+# Flagship evidence strips — 2026-10-04
+
+Rechecked the three public repositories at the same pinned revisions. Arbiter’s August 22 comparison contains 101 realistic cases and 20 red-team cases, with three runs per suite. Published Qwen full-realistic-suite recall (100%), precision (72%) and accuracy (83%) with scope and historical date; CI is described as configuration, not a newly verified successful run. The ambiguous historical 296/88 aggregate remains unused. TrustKit upload calls extract_from_file with its default seven-frame target; optional comparison uses the first three frames. The 99.6% example is explicitly arithmetic (1 − 7/1800), not a measured runtime result. Honeypot limits are configurable defaults: 256m memory and 30-second subprocess timeout; evidence files are metadata.json, session.jsonl and transcript.txt. No unsupported speed, accuracy or containment outcomes added. User supplied NYC area and openness to relocation.
+
+---
+
 # Project refinement — 2026-10-04
 
 Removed project entries 7–9 (Navexis, Clean Energy Awareness, Steganography) at the user’s explicit request, including their generated routes. Expanded the three flagship stories from the previously reviewed pinned-source facts below. Added flow diagrams for SentinelScope, Financial RAG and MedAI; all six retained architecture maps support playback. Added a local illustrative Arbiter network animation and full-card case-study links with separate GitHub links. No new benchmark, production-readiness or individual-ownership claims were introduced.

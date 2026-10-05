@@ -93,7 +93,7 @@ test('collection filters, search, pagination, project notes and volunteering', a
   await expect(page.locator('.journey-item').last()).toContainText('Aug 2024 — Jan 2025');
   await expect(page.locator('.journey-item')).toHaveCount(3);
   await expect(page.locator('#hero-title')).toContainText('Haryshwa Nair');
-  await expect(page.locator('.intro-location')).toContainText('United States (USA)');
+  await expect(page.locator('.intro-location')).toContainText('Based in the NYC area · Open to relocation');
   await expect(page.locator('.journey-item').nth(1)).toContainText('Lead since June 2026');
 });
 

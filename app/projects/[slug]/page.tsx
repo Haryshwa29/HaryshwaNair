@@ -1,3 +1,4 @@
+import { ProjectEvidence } from '@/components/project-evidence';
 import { deepDives } from '@/content/deep-dives';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -19,6 +20,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (index < 0) notFound();
   const project = projects[index]; const next = projects[(index + 1) % projects.length];
   return <main id="main"><div className="wrap case-hero"><Link href="/#work" className="back-link"><ArrowLeft size={16} aria-hidden="true" />Selected work</Link><p className="eyebrow">Chapter {project.number} / {project.category}</p><h1>{project.name}<span className="accent">.</span></h1><p className="case-deck">{project.title}</p><div className="case-meta"><div><span className="eyebrow">Status</span><p>{project.status}</p></div><div><span className="eyebrow">My role</span><p>{project.role}</p></div>{project.repository && <a className="text-link" href={project.repository}>View source on GitHub <ArrowUpRight size={17} aria-hidden="true" /></a>}{project.demo && <a className="text-link" href={project.demo}>View demo <ArrowUpRight size={17} aria-hidden="true" /></a>}</div></div>
+    <ProjectEvidence slug={slug} repository={project.repository} commit={project.commit} />
     <section className="case-concept wrap"><p className="eyebrow">The idea</p><h2>{project.summary}</h2><p className="tech-line">{project.technologies.join(' / ')}</p></section>
     <section id="architecture" className="case-architecture wrap" aria-label="Project visual explanation"><Architecture variant={slug} repository={project.repository} commit={project.commit} /></section>
     <ProjectFlow slug={slug} />
