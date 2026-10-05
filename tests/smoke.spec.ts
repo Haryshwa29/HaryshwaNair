@@ -238,3 +238,22 @@ test('closing quote changes on reload and stays fixed during a visit', async ({ 
   await page.getByRole('button', { name: /^Security/ }).click();
   await expect(page.locator('.closing-quote blockquote')).toHaveText(next);
 });
+
+
+test('scroll reveals are subtle, run once, and respect reduced motion', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/');
+  await expect(page.getByRole('link', { name: 'Open the full collection' })).toHaveCount(0);
+  await expect(page.locator('.collection-foot')).toHaveCount(0);
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    const target = document.querySelector('.education-card')!;
+    window.scrollTo(0, target.getBoundingClientRect().top + scrollY - 200);
+  });
+  await expect.poll(() => page.locator('.education-card').first().evaluate(el => el.getAnimations().length)).toBeGreaterThan(0);
+  await expect.poll(() => page.locator('.education-card').first().evaluate(el => el.getAnimations().length)).toBe(0);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('.contact-grid').scrollIntoViewIfNeeded();
+  expect(await page.locator('.contact-grid').evaluate(el => el.getAnimations().length)).toBe(0);
+  await expect(page.locator('.contact-grid')).toHaveCSS('opacity', '1');
+});

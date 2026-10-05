@@ -21,9 +21,7 @@ export function MotionLayer() {
       const leave = () => { if(ring.current) ring.current.style.opacity = '0'; };
       window.addEventListener('pointermove', move, { passive: true });
       document.addEventListener('pointerleave', leave);
-      const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('has-entered'); observer.unobserve(entry.target); } }), { threshold: 0.08 });
-      document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-      cleanup = () => { window.removeEventListener('pointermove', move); document.removeEventListener('pointerleave', leave); cancelAnimationFrame(frame); observer.disconnect(); leave(); const art = document.querySelector<HTMLElement>('.portrait-stage'); art?.style.removeProperty('--shift-x'); art?.style.removeProperty('--shift-y'); };
+      cleanup = () => { window.removeEventListener('pointermove', move); document.removeEventListener('pointerleave', leave); cancelAnimationFrame(frame); leave(); const art = document.querySelector<HTMLElement>('.portrait-stage'); art?.style.removeProperty('--shift-x'); art?.style.removeProperty('--shift-y'); };
     }
     setup(); motion.addEventListener('change', setup); pointer.addEventListener('change', setup);
     return () => { cleanup(); motion.removeEventListener('change', setup); pointer.removeEventListener('change', setup); };

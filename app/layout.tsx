@@ -8,6 +8,7 @@ import './globals.css';
 import './editorial.css';
 import { Header, Footer } from '@/components/site-shell';
 import { site } from '@/lib/site-config';
+import { ScrollReveals } from '@/components/scroll-reveals';
 import { MotionLayer } from '@/components/motion-layer';
 export const metadata: Metadata = {
   metadataBase: new URL(site.origin || 'http://localhost:3000'),
@@ -16,5 +17,5 @@ export const metadata: Metadata = {
   robots: { index: site.indexable, follow: site.indexable },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a><MotionLayer /><Header />{children}<Footer /></body></html>;
+  return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a><MotionLayer /><ScrollReveals /><Header />{children}<Footer /></body></html>;
 }
